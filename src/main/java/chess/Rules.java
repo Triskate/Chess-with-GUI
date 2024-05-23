@@ -70,8 +70,15 @@ public class Rules {
                         return false;
                     }
                 }
+            // King
             case "WK":
-                break;
+                if((aimedPiece.equals("  ") || aimedPiece.startsWith("B")) && (
+                  (aimedRow == currentRow-1 || aimedRow == currentRow+1 || aimedRow == currentRow) &&
+                  (aimedColumn == currentColumn-1 || aimedColumn == currentColumn+1 || aimedColumn == currentColumn))){
+                    return true;
+                } else {
+                    return false;
+                }
             case "WQ":
                 break;
 
@@ -137,8 +144,15 @@ public class Rules {
                         return false;
                     }
                 }
+            // King
             case "BK":
-                break;
+                if(aimedPiece.equals("  ") || aimedPiece.startsWith("W") && (
+                  (aimedRow == currentRow-1 || aimedRow == currentRow+1 || aimedRow == currentRow) &&
+                  (aimedColumn == currentColumn-1 || aimedColumn == currentColumn+1 || aimedColumn == currentColumn))){
+                    return true;
+                } else {
+                    return false;
+                }
             case "BQ":
                 break;
         }
