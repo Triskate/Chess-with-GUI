@@ -4,8 +4,6 @@ public class Rules {
 
     public boolean validateMovement (int currentRow, int currentColumn, int aimedRow, int aimedColumn){
 
-        Board board = new Board();
-
         String currentPiece = Board.main_board[currentRow][currentColumn];
         String aimedPiece = Board.main_board[aimedRow][aimedColumn];
 
@@ -23,8 +21,18 @@ public class Rules {
                 }else{
                     return false;
                 }
+            // Horse
             case "WH":
-                break;
+                if((aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && (
+                   (aimedRow == currentRow+2 && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1)) ||
+                   (aimedRow == currentRow-2 && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1)) ||
+                   (aimedRow == currentRow+1 && (aimedColumn == currentColumn+2 || aimedColumn == currentColumn-2)) ||
+                   (aimedRow == currentRow-1 && (aimedColumn == currentColumn+2 || aimedColumn == currentColumn-2)))){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             case "WB":
                 break;
             // Tower
@@ -80,8 +88,18 @@ public class Rules {
                 }else{
                     return false;
                 }
+            // Horse
             case "BH":
-                break;
+                if((aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && (
+                   (aimedRow == currentRow+2 && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1)) ||
+                   (aimedRow == currentRow-2 && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1)) ||
+                   (aimedRow == currentRow+1 && (aimedColumn == currentColumn+2 || aimedColumn == currentColumn-2)) ||
+                   (aimedRow == currentRow-1 && (aimedColumn == currentColumn+2 || aimedColumn == currentColumn-2)))){
+                    return true;
+                }
+                else{
+                    return false;
+                }
             case "BB":
                 break;
             // Tower
