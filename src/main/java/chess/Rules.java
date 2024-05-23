@@ -18,7 +18,7 @@ public class Rules {
         boolean L4 = aimedRow == currentRow-1 && (aimedColumn == currentColumn+2 || aimedColumn == currentColumn-2);
 
         // Bishop movement
-        boolean diagonal = Math.abs(currentRow - aimedRow)  == Math.abs(currentColumn - aimedColumn);
+        boolean diagonal = Math.abs(currentRow - aimedRow) == Math.abs(currentColumn - aimedColumn);
 
         // Tower movements
         boolean up = aimedRow == currentRow && aimedColumn < currentColumn;
@@ -45,7 +45,8 @@ public class Rules {
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && (L1 || L2 || L3 || L4);
             // Bishop (Need to fix jumping through pieces)
             case "WB":
-                return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && diagonal;
+                return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) &&
+                       diagonal && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
             // Tower
             case "WT":
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) &&
@@ -68,7 +69,8 @@ public class Rules {
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && (L1 || L2 || L3 || L4);
             // Bishop (Need to fix jumping through pieces)
             case "BB":
-                return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && diagonal;
+                return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) &&
+                       diagonal && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
             // Tower
             case "BT":
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) &&
@@ -93,9 +95,9 @@ public class Rules {
         else if(aimedRow != currentRow && aimedColumn == currentColumn){
             direction = "vertical";
         }
-        /*else if(aimedRow != currentRow && aimedColumn != currentColumn){
+        else if(Math.abs(currentRow - aimedRow) == Math.abs(currentColumn - aimedColumn)){
             direction = "diagonal";
-        }*/
+        }
 
         switch (direction){
             case "horizontal":
@@ -105,15 +107,15 @@ public class Rules {
                             return false;
                         }
                     }
-                    return true;
-                }else{
+                }
+                else{
                     for(int i = currentColumn-1; i > aimedColumn; i--){
                         if(!Board.main_board[currentRow][i].equals("  ")){
                             return false;
                         }
                     }
-                    return true;
                 }
+                return true;
             case "vertical":
                 if(aimedRow - currentRow > 0){
                     for(int i = currentRow+1; i < aimedRow; i++){
@@ -121,16 +123,53 @@ public class Rules {
                             return false;
                         }
                     }
-                    return true;
-                }else{
+                }
+                else{
                     for(int i = currentRow-1; i > aimedRow; i--){
                         if(!Board.main_board[i][currentColumn].equals("  ")){
                             return false;
                         }
                     }
-                    return true;
                 }
-            //case "diagonal":
+                return true;
+            case "diagonal":
+                if(currentRow < aimedRow && currentColumn < aimedColumn){
+                    for(int i = currentRow+1; i < aimedRow;i++){
+                        for(int e = currentColumn+1; e < aimedColumn;e++){
+                            if(!Board.main_board[i][e].equals("  ")){
+                                return false;
+                            }
+                        }
+                    }
+                }
+                else if(currentRow < aimedRow && currentColumn > aimedColumn){
+                    for(int i = currentRow+1; i < aimedRow;i++){
+                        for(int e = currentColumn-1; e > aimedColumn;e--){
+                            if(!Board.main_board[i][e].equals("  ")){
+                                return false;
+                            }
+                        }
+                    }
+                }
+                else if(currentRow > aimedRow && currentColumn < aimedColumn){
+                    for(int i = currentRow-1; i > aimedRow;i--){
+                        for(int e = currentColumn+1; e < aimedColumn;e++){
+                            if(!Board.main_board[i][e].equals("  ")){
+                                return false;
+                            }
+                        }
+                    }
+                }
+                else if(currentRow > aimedRow && currentColumn > aimedColumn){
+                    for(int i = currentRow-1; i > aimedRow;i--){
+                        for(int e = currentColumn-1; e > aimedColumn;e--){
+                            if(!Board.main_board[i][e].equals("  ")){
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
             default:
                 return false;
         }

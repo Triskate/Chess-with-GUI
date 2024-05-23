@@ -19,15 +19,16 @@ public class Main {
             // Standard game behaviour
             behavior.getMovement();
             board.printBoard();
-            /*switch (behavior.currentPlayer){
-                case 1:
-                    behavior.currentPlayer = 2;
-                    break;
-                case 2:
-                    behavior.currentPlayer = 1;
-                    break;
-            }
-             */
+
+            // Player swap
+            // switch (behavior.currentPlayer){
+            //    case 1:
+            //        behavior.currentPlayer = 2;
+            //        break;
+            //    case 2:
+            //        behavior.currentPlayer = 1;
+            //        break;
+            //}
         }
 
     }
