@@ -48,43 +48,15 @@ public class Rules {
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && diagonal;
             // Tower
             case "WT":
-                if(aimedPiece.startsWith("B") || aimedPiece.equals("  ")) {
-                    if (right) {
-                        for (int i = currentRow; i < aimedRow; i++) {
-                            if (!Board.main_board[i][currentColumn].equals("  ")) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    } else if (left) {
-                        for (int i = aimedRow; i < currentRow; i++) {
-                            if (!Board.main_board[i][currentColumn].equals("  ")) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    } else if (down) {
-                        for (int i = currentColumn; i < aimedColumn; i++) {
-                            if (!Board.main_board[currentRow][i].equals("  ")) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    } else if (up) {
-                        for (int i = aimedColumn; i < currentColumn; i++) {
-                            if (!Board.main_board[currentRow][i].equals("  ")) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                }
-                return false;
+                return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) &&
+                       (up || down || left || right) && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
             // King
             case "WK":
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && shortStep;
+            // Queen
             case "WQ":
-                return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && (horizontal || vertical || diagonal);
+                return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) &&
+                       (horizontal || vertical || diagonal) && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
 
             // Validation for black pieces
 
@@ -99,44 +71,68 @@ public class Rules {
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && diagonal;
             // Tower
             case "BT":
-                if(aimedPiece.startsWith("W") || aimedPiece.equals("  ")){
-                    if (right) {
-                        for (int i = currentRow; i < aimedRow; i++) {
-                            if (!Board.main_board[i][currentColumn].equals("  ")) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    } else if (left) {
-                        for (int i = aimedRow; i < currentRow; i++) {
-                            if (!Board.main_board[i][currentColumn].equals("  ")) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    } else if (down) {
-                        for (int i = currentColumn; i < aimedColumn; i++) {
-                            if (!Board.main_board[currentRow][i].equals("  ")) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    } else if (up) {
-                        for (int i = aimedColumn; i < currentColumn; i++) {
-                            if (!Board.main_board[currentRow][i].equals("  ")) {
-                                return false;
-                            }
-                        }
-                        return true;
-                    }
-                }
-                return false;
+                return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) &&
+                       (up || down || left || right) && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
             // King
             case "BK":
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && shortStep;
+            // Queen
             case "BQ":
-                return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && (horizontal || vertical || diagonal);
+                return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) &&
+                       (horizontal || vertical || diagonal) && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
         }
         return false;
+    }
+    public boolean clearPath(int currentRow, int currentColumn, int aimedRow, int aimedColumn){
+
+        String direction = "";
+
+        if(aimedRow == currentRow && aimedColumn != currentColumn){
+            direction = "horizontal";
+        }
+        else if(aimedRow != currentRow && aimedColumn == currentColumn){
+            direction = "vertical";
+        }
+        /*else if(aimedRow != currentRow && aimedColumn != currentColumn){
+            direction = "diagonal";
+        }*/
+
+        switch (direction){
+            case "horizontal":
+                if(aimedColumn - currentColumn > 0){
+                    for(int i = currentColumn+1; i < aimedColumn; i++){
+                        if(!Board.main_board[currentRow][i].equals("  ")){
+                            return false;
+                        }
+                    }
+                    return true;
+                }else{
+                    for(int i = currentColumn-1; i > aimedColumn; i--){
+                        if(!Board.main_board[currentRow][i].equals("  ")){
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            case "vertical":
+                if(aimedRow - currentRow > 0){
+                    for(int i = currentRow+1; i < aimedRow; i++){
+                        if(!Board.main_board[i][currentColumn].equals("  ")){
+                            return false;
+                        }
+                    }
+                    return true;
+                }else{
+                    for(int i = currentRow-1; i > aimedRow; i--){
+                        if(!Board.main_board[i][currentColumn].equals("  ")){
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            //case "diagonal":
+            default:
+                return false;
+        }
     }
 }
