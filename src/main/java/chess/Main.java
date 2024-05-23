@@ -2,10 +2,12 @@ package chess;
 
 public class Main {
 
+    // Main variable
+    public static boolean game = true;
+
     public static void main(String[] args){
 
-        // Variables
-        boolean game = true;
+        // Instances of classes
         Board board = new Board();
         Behavior behavior = new Behavior();
 
@@ -19,7 +21,9 @@ public class Main {
             // Standard game behaviour
             behavior.getMovement();
             board.printBoard();
-            /*switch (behavior.currentPlayer){
+
+            // Player swap
+            switch (behavior.currentPlayer){
                 case 1:
                     behavior.currentPlayer = 2;
                     break;
@@ -27,7 +31,6 @@ public class Main {
                     behavior.currentPlayer = 1;
                     break;
             }
-             */
         }
 
     }
