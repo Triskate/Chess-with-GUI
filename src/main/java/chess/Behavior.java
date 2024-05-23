@@ -69,9 +69,12 @@ public class Behavior {
     public void movementValidation(int currentRow, int currentColumn, int aimedRow, int aimedColumn){
 
         String currentPiece = Board.main_board[currentRow][currentColumn];
-        // String aimedPiece = Board.main_board[aimedRow][aimedRow]; (Will be useful if I make a graveyard)
+        String aimedPiece = Board.main_board[aimedRow][aimedRow];
 
         if(rules.validateMovement(currentRow,currentColumn,aimedRow,aimedColumn)){
+            if(aimedPiece.equals("BK") || aimedPiece.equals("WK")){
+                Main.game = false;
+            }
             Board.main_board[aimedRow][aimedColumn] = currentPiece;
             Board.main_board[currentRow][currentColumn] = "  ";
         }else{

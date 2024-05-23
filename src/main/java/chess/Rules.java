@@ -35,8 +35,8 @@ public class Rules {
         boolean horizontal = (aimedRow != currentRow && aimedColumn == currentColumn);;
 
         switch(currentPiece){
-            // Validation for white pieces
 
+            // Validation for white pieces
             // Pawn
             case "WP":
                 return shortForward || (aimedPiece.startsWith("B") && diagonalKill);
@@ -60,7 +60,6 @@ public class Rules {
                        (horizontal || vertical || diagonal) && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
 
             // Validation for black pieces
-
             // Pawn
             case "BP":
                 return shortForward || (aimedPiece.startsWith("W") && diagonalKill);
