@@ -106,14 +106,14 @@ public class Movement {
             case "horizontal":
                 if(aimedColumn - currentColumn > 0){
                     for(int i = currentColumn+1; i < aimedColumn; i++){
-                        if(!Board.main_board[currentRow][i].equals("  ")){
+                        if(!GUI.button[currentRow][i].getToolTipText().equals("  ")){
                             return false;
                         }
                     }
                 }
                 else{
                     for(int i = currentColumn-1; i > aimedColumn; i--){
-                        if(!Board.main_board[currentRow][i].equals("  ")){
+                        if(!GUI.button[currentRow][i].getToolTipText().equals("  ")){
                             return false;
                         }
                     }
@@ -122,14 +122,14 @@ public class Movement {
             case "vertical":
                 if(aimedRow - currentRow > 0){
                     for(int i = currentRow+1; i < aimedRow; i++){
-                        if(!Board.main_board[i][currentColumn].equals("  ")){
+                        if(!GUI.button[i][currentColumn].getToolTipText().equals("  ")){
                             return false;
                         }
                     }
                 }
                 else{
                     for(int i = currentRow-1; i > aimedRow; i--){
-                        if(!Board.main_board[i][currentColumn].equals("  ")){
+                        if(!GUI.button[i][currentColumn].getToolTipText().equals("  ")){
                             return false;
                         }
                     }
@@ -139,7 +139,7 @@ public class Movement {
                 if(currentRow < aimedRow && currentColumn < aimedColumn){
                     for(int i = currentRow+1; i < aimedRow;i++){
                         for(int e = currentColumn+1; e < aimedColumn;e++){
-                            if(!Board.main_board[i][e].equals("  ")){
+                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
                                 return false;
                             }
                         }
@@ -148,7 +148,7 @@ public class Movement {
                 else if(currentRow < aimedRow && currentColumn > aimedColumn){
                     for(int i = currentRow+1; i < aimedRow;i++){
                         for(int e = currentColumn-1; e > aimedColumn;e--){
-                            if(!Board.main_board[i][e].equals("  ")){
+                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
                                 return false;
                             }
                         }
@@ -157,7 +157,7 @@ public class Movement {
                 else if(currentRow > aimedRow && currentColumn < aimedColumn){
                     for(int i = currentRow-1; i > aimedRow;i--){
                         for(int e = currentColumn+1; e < aimedColumn;e++){
-                            if(!Board.main_board[i][e].equals("  ")){
+                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
                                 return false;
                             }
                         }
@@ -166,7 +166,7 @@ public class Movement {
                 else if(currentRow > aimedRow && currentColumn > aimedColumn){
                     for(int i = currentRow-1; i > aimedRow;i--){
                         for(int e = currentColumn-1; e > aimedColumn;e--){
-                            if(!Board.main_board[i][e].equals("  ")){
+                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
                                 return false;
                             }
                         }
