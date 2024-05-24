@@ -1,11 +1,15 @@
 package chess;
 
+import javax.swing.*;
+
 public class Movement {
+
+    //GUI gui = new GUI();
 
     public boolean validateMovement (int currentRow, int currentColumn, int aimedRow, int aimedColumn){
 
-        String currentPiece = Board.main_board[currentRow][currentColumn];
-        String aimedPiece = Board.main_board[aimedRow][aimedColumn];
+        String currentPiece = GUI.button[currentRow][currentColumn].getToolTipText();
+        String aimedPiece = GUI.button[aimedRow][aimedColumn].getToolTipText();
 
         // Pawn movements
         boolean shortForward = aimedRow == currentRow-1 && aimedPiece.equals("  ");
@@ -172,5 +176,22 @@ public class Movement {
             default:
                 return false;
         }
+    }
+    public boolean checkPlayerPiece(int row, int column){
+
+        String currentPiece = GUI.button[row][column].getToolTipText();
+        switch (Main.currentPlayer){
+            case 1:
+                if(!currentPiece.startsWith("W")){
+                    return false;
+                }
+                break;
+            case 2:
+                if(!currentPiece.startsWith("B")){
+                    return false;
+                }
+                break;
+        }
+        return true;
     }
 }
