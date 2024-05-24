@@ -1,6 +1,6 @@
 package chess;
 
-public class Rules {
+public class Movement {
 
     public boolean validateMovement (int currentRow, int currentColumn, int aimedRow, int aimedColumn){
 

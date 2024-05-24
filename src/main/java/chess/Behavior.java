@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Behavior {
 
     Scanner scanner = new Scanner(System.in);
-    Rules rules = new Rules();
+    Movement movement = new Movement();
 
     // Current player 1 equals to White and 2 equals to Black
     int currentPlayer = 1;
@@ -71,7 +71,7 @@ public class Behavior {
         String currentPiece;
         String aimedPiece = Board.main_board[aimedRow][aimedRow];
 
-        if(rules.validateMovement(currentRow,currentColumn,aimedRow,aimedColumn)){
+        if(movement.validateMovement(currentRow,currentColumn,aimedRow,aimedColumn)){
 
             if(aimedPiece.equals("BK") || aimedPiece.equals("WK")){
                 Main.game = false;
