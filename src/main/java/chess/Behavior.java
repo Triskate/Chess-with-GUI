@@ -35,7 +35,7 @@ public class Behavior {
         currentColumn = Integer.parseInt(scanner.nextLine()) - 1;
         System.out.println("Please introduce the row of the piece you want to move");
         currentRow = Integer.parseInt(scanner.nextLine()) - 1;
-        checkIfInBoard(currentRow, currentColumn);
+        checkIfInBounds(currentRow, currentColumn);
         checkPlayerPiece(currentRow, currentColumn);
 
         // Receive coordinates chosen to move and validate them
@@ -43,7 +43,7 @@ public class Behavior {
         aimedColumn = Integer.parseInt(scanner.nextLine()) - 1;
         System.out.println("Please introduce the row you want to move the piece to");
         aimedRow = Integer.parseInt(scanner.nextLine()) - 1;
-        checkIfInBoard(currentRow, currentColumn);
+        checkIfInBounds(currentRow, currentColumn);
         movementValidation(currentRow,currentColumn,aimedRow,aimedColumn);
 
     }
@@ -68,13 +68,18 @@ public class Behavior {
 
     public void movementValidation(int currentRow, int currentColumn, int aimedRow, int aimedColumn){
 
-        String currentPiece = Board.main_board[currentRow][currentColumn];
+        String currentPiece;
         String aimedPiece = Board.main_board[aimedRow][aimedRow];
 
         if(rules.validateMovement(currentRow,currentColumn,aimedRow,aimedColumn)){
+
             if(aimedPiece.equals("BK") || aimedPiece.equals("WK")){
                 Main.game = false;
+            }else if(!aimedPiece.equals("  ")){
+                Board.graveyard.add(aimedPiece);
             }
+
+            currentPiece = checkPromotion(currentRow, currentColumn, aimedRow);
             Board.main_board[aimedRow][aimedColumn] = currentPiece;
             Board.main_board[currentRow][currentColumn] = "  ";
         }else{
@@ -83,10 +88,44 @@ public class Behavior {
         }
     }
 
-    public void checkIfInBoard(int row, int column){
+    public void checkIfInBounds(int row, int column){
         if(!(row >= 0 && row <= 7) && (column >= 0 && column <= 7)){
             System.out.println("Error: wrong coordinates (out of bounds)");
             getMovement();
+        }
+    }
+
+    public String checkPromotion(int currentRow, int currentColumn, int aimedRow){
+
+        String currentPiece = Board.main_board[currentRow][currentColumn];
+
+        switch (currentPiece){
+            case "WP":
+                if(aimedRow == 0){
+                    System.out.print("Select one of the following pieces to replace the pawn: WH WB WT WQ\n");
+                    String selectedPiece = scanner.nextLine();
+                    if(selectedPiece.equals("WH") || selectedPiece.equals("WB") || selectedPiece.equals("WT") ||selectedPiece.equals("WQ")){
+                        return selectedPiece;
+                    }
+                    else{
+                        System.out.println("Error: Selected piece is not valid");
+                        checkPromotion(currentRow, currentColumn, aimedRow);
+                    }
+                }
+            case "BP":
+                if(aimedRow == 8){
+                    System.out.print("Select one of the following pieces to replace the pawn: BH BB BT BQ\n");
+                    String selectedPiece = scanner.nextLine();
+                    if(selectedPiece.equals("BH") || selectedPiece.equals("BB") || selectedPiece.equals("BT") ||selectedPiece.equals("BQ")){
+                        return selectedPiece;
+                    }
+                    else{
+                        System.out.println("Error: Selected piece is not valid");
+                        checkPromotion(currentRow, currentColumn, aimedRow);
+                    }
+                }
+            default:
+                return currentPiece;
         }
     }
 }

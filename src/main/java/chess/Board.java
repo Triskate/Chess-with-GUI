@@ -1,9 +1,13 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Board {
 
     // Main board that will display on the UI
     static String[][] main_board = new String[8][8];
+    static List<String> graveyard = new ArrayList<>();
 
     // Set up the initial pieces on the main board
     public void setUpBoard(){
