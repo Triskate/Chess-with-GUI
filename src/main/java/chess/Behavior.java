@@ -75,8 +75,6 @@ public class Behavior {
 
             if(aimedPiece.equals("BK") || aimedPiece.equals("WK")){
                 Main.game = false;
-            }else if(!aimedPiece.equals("  ")){
-                Board.graveyard.add(aimedPiece);
             }
 
             currentPiece = checkPromotion(currentRow, currentColumn, aimedRow);
