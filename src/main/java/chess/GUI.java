@@ -8,8 +8,10 @@ import java.util.Objects;
 
 public class GUI extends JPanel{
 
+    // Initiate movement
     Movement movement = new Movement();
 
+    // Main variables
     static JButton[][] button = new JButton[8][8];
     int clicks = 0;
 
@@ -19,6 +21,7 @@ public class GUI extends JPanel{
     int aimedColumn;
 
     public void startGUI(){
+
         // Declare GUI
         JFrame frame = new JFrame("Chess");
         // Define closing operation
@@ -35,7 +38,6 @@ public class GUI extends JPanel{
                 button[i][e].setSize(50,50);
                 button[i][e].setName(i + "" + e);
                 button[i][e].addActionListener(new ActionListener() {
-
                     public void actionPerformed(ActionEvent e) {
 
                         JButton clickedButton = (JButton) e.getSource();
@@ -59,13 +61,14 @@ public class GUI extends JPanel{
                                 // Make all the validations needed before moving the piece
                                 if(movement.checkPlayerPiece(currentRow, currentColumn) &&movement.validateMovement(currentRow, currentColumn, aimedRow, aimedColumn)){
                                     if(aimedPiece.equals("BK") || aimedPiece.equals("WK")){
-                                        Main.game = false;
+                                        // Closing operation
                                     }
                                     //currentPiece = checkPromotion(currentRow, currentColumn, aimedRow);
                                     button[aimedRow][aimedColumn].setToolTipText(currentPiece);
                                     button[aimedRow][aimedColumn].setIcon(button[currentRow][currentColumn].getIcon());
                                     button[currentRow][currentColumn].setToolTipText("  ");
                                     button[currentRow][currentColumn].setIcon(null);
+
                                     // Swap players at the end of the turn
                                     switch (Main.currentPlayer){
                                         case 1:
@@ -88,7 +91,7 @@ public class GUI extends JPanel{
         }
         setUpBoard();
 
-        // Fill buttons into the frame
+        // Fill frame with buttons
         for (int i = 0; i < 8; i++){
             for (int e = 0; e < 8; e++){
                 frame.getContentPane().add(button[i][e]);
@@ -98,6 +101,7 @@ public class GUI extends JPanel{
     }
     public void setUpBoard(){
 
+        // Variables
         String empty = "  ";
 
         String black_pawn = "BP";
@@ -129,7 +133,7 @@ public class GUI extends JPanel{
             }
         }
 
-        // Fill board
+        // Fill board with empties
         for (int i = 0; i < 8; i++){
             for (int e = 0; e < 8; e++){
                 button[i][e].setToolTipText(empty);
@@ -137,52 +141,70 @@ public class GUI extends JPanel{
         }
 
         // Fill top rows with black pieces
+        // Black tower
         button[0][0].setToolTipText(black_tower);
-        button[0][1].setToolTipText(black_horse);
-        button[0][2].setToolTipText(black_bishop);
-        button[0][3].setToolTipText(black_king);
-        button[0][4].setToolTipText(black_queen);
-        button[0][5].setToolTipText(black_bishop);
-        button[0][6].setToolTipText(black_horse);
-        button[0][7].setToolTipText(black_tower);
         button[0][0].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BT.png"))))));
+        // Black horse
+        button[0][1].setToolTipText(black_horse);
         button[0][1].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BH.png"))))));
+        // Black bishop
+        button[0][2].setToolTipText(black_bishop);
         button[0][2].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BB.png"))))));
+        // Black king
+        button[0][3].setToolTipText(black_king);
         button[0][3].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BK.png"))))));
+        // Black queen
+        button[0][4].setToolTipText(black_queen);
         button[0][4].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BQ.png"))))));
+        // Black bishop
+        button[0][5].setToolTipText(black_bishop);
         button[0][5].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BB.png"))))));
+        // Black horse
+        button[0][6].setToolTipText(black_horse);
         button[0][6].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BH.png"))))));
+        // Black tower
+        button[0][7].setToolTipText(black_tower);
         button[0][7].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BT.png"))))));
+        // Black pawns
         for(int i = 0; i < button.length; i++){
             button[1][i].setToolTipText(black_pawn);
             button[1][i].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BP.png"))))));
         }
 
         // Fill bottom rows with white pieces
+        // White pawns
         for(int i = 0; i < button.length; i++){
             button[6][i].setToolTipText(white_pawn);
             button[6][i].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WP.png"))))));
         }
+        // White tower
         button[7][0].setToolTipText(white_tower);
-        button[7][1].setToolTipText(white_horse);
-        button[7][2].setToolTipText(white_bishop);
-        button[7][3].setToolTipText(white_king);
-        button[7][4].setToolTipText(white_queen);
-        button[7][5].setToolTipText(white_bishop);
-        button[7][6].setToolTipText(white_horse);
-        button[7][7].setToolTipText(white_tower);
         button[7][0].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WT.png"))))));
+        // White horse
+        button[7][1].setToolTipText(white_horse);
         button[7][1].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WH.png"))))));
+        // White bishop
+        button[7][2].setToolTipText(white_bishop);
         button[7][2].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WB.png"))))));
+        // White King
+        button[7][3].setToolTipText(white_king);
         button[7][3].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WK.png"))))));
+        // White queen
+        button[7][4].setToolTipText(white_queen);
         button[7][4].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WQ.png"))))));
+        // White bishop
+        button[7][5].setToolTipText(white_bishop);
         button[7][5].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WB.png"))))));
+        // White horse
+        button[7][6].setToolTipText(white_horse);
         button[7][6].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WH.png"))))));
+        // White tower
+        button[7][7].setToolTipText(white_tower);
         button[7][7].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WT.png"))))));
     }
 
+    // Function to upscale images used as icons
     public ImageIcon upscaleIcon(ImageIcon original){
-
         Image originalImage = original.getImage();
         Image upscaledImage = originalImage.getScaledInstance(60, 55, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(upscaledImage);

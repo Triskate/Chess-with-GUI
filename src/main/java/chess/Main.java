@@ -2,16 +2,15 @@ package chess;
 
 public class Main {
 
-    // Main variable
-    public static boolean game = true;
+    // Main variables
     public static int currentPlayer = 1;
 
     public static void main(String[] args){
 
-        // Instances of classes
+        // Instantiate GUI
         GUI gui = new GUI();
 
-        // Preparations for the game
+        // Start GUI
         gui.startGUI();
 
     }
