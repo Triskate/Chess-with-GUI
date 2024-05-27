@@ -1,7 +1,5 @@
 package chess;
 
-import javax.swing.*;
-
 public class Movement {
 
     //GUI gui = new GUI();
@@ -12,8 +10,10 @@ public class Movement {
         String aimedPiece = GUI.button[aimedRow][aimedColumn].getToolTipText();
 
         // Pawn movements
-        boolean shortForward = aimedRow == currentRow-1 && aimedPiece.equals("  ");
-        boolean diagonalKill = (aimedRow == currentRow-1) && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1);
+        boolean shortForwardWhite = aimedRow == currentRow-1 && aimedPiece.equals("  ") && currentColumn == aimedColumn;
+        boolean shortForwardBlack = aimedRow == currentRow+1 && aimedPiece.equals("  ") && currentColumn == aimedColumn;
+        boolean diagonalKillWhite = (aimedRow == currentRow-1) && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1);
+        boolean diagonalKillBlack = (aimedRow == currentRow+1) && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1);
 
         // Horse movements
         boolean L1 = aimedRow == currentRow+2 && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1);
@@ -43,11 +43,11 @@ public class Movement {
             // Validation for white pieces
             // Pawn
             case "WP":
-                return shortForward || (aimedPiece.startsWith("B") && diagonalKill);
+                return shortForwardWhite || ((aimedPiece.startsWith("B") && diagonalKillWhite));
             // Horse
             case "WH":
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && (L1 || L2 || L3 || L4);
-            // Bishop (Need to fix jumping through pieces)
+            // Bishop
             case "WB":
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) &&
                        diagonal && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
@@ -66,11 +66,11 @@ public class Movement {
             // Validation for black pieces
             // Pawn
             case "BP":
-                return shortForward || (aimedPiece.startsWith("W") && diagonalKill);
+                return shortForwardBlack || (aimedPiece.startsWith("W") && diagonalKillBlack);
             // Horse
             case "BH":
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && (L1 || L2 || L3 || L4);
-            // Bishop (Need to fix jumping through pieces)
+            // Bishop
             case "BB":
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) &&
                        diagonal && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
@@ -145,7 +145,7 @@ public class Movement {
                         }
                     }
                 }
-                else if(currentRow < aimedRow && currentColumn > aimedColumn){
+                else if(currentRow < aimedRow){
                     for(int i = currentRow+1; i < aimedRow;i++){
                         for(int e = currentColumn-1; e > aimedColumn;e--){
                             if(!GUI.button[i][e].getToolTipText().equals("  ")){
@@ -163,7 +163,7 @@ public class Movement {
                         }
                     }
                 }
-                else if(currentRow > aimedRow && currentColumn > aimedColumn){
+                else if(currentRow > aimedRow){
                     for(int i = currentRow-1; i > aimedRow;i--){
                         for(int e = currentColumn-1; e > aimedColumn;e--){
                             if(!GUI.button[i][e].getToolTipText().equals("  ")){

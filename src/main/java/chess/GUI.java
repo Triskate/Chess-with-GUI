@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class GUI extends JPanel{
 
@@ -62,18 +63,22 @@ public class GUI extends JPanel{
                                     }
                                     //currentPiece = checkPromotion(currentRow, currentColumn, aimedRow);
                                     button[aimedRow][aimedColumn].setToolTipText(currentPiece);
+                                    button[aimedRow][aimedColumn].setIcon(button[currentRow][currentColumn].getIcon());
                                     button[currentRow][currentColumn].setToolTipText("  ");
-                                }
-                                // Swap players at the end of the turn
-                                switch (Main.currentPlayer){
-                                    case 1:
-                                        Main.currentPlayer = 2;
-                                        break;
-                                    case 2:
-                                        Main.currentPlayer = 1;
-                                        break;
+                                    button[currentRow][currentColumn].setIcon(null);
+                                    // Swap players at the end of the turn
+                                    switch (Main.currentPlayer){
+                                        case 1:
+                                            Main.currentPlayer = 2;
+                                            break;
+                                        case 2:
+                                            Main.currentPlayer = 1;
+                                            break;
+                                    }
                                 }
                                 clicks--;
+                                System.out.println(Main.currentPlayer);
+                                System.out.println(clicks);
                                 break;
                         }
 
@@ -140,13 +145,23 @@ public class GUI extends JPanel{
         button[0][5].setToolTipText(black_bishop);
         button[0][6].setToolTipText(black_horse);
         button[0][7].setToolTipText(black_tower);
+        button[0][0].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BT.png"))))));
+        button[0][1].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BH.png"))))));
+        button[0][2].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BB.png"))))));
+        button[0][3].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BK.png"))))));
+        button[0][4].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BQ.png"))))));
+        button[0][5].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BB.png"))))));
+        button[0][6].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BH.png"))))));
+        button[0][7].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BT.png"))))));
         for(int i = 0; i < button.length; i++){
             button[1][i].setToolTipText(black_pawn);
+            button[1][i].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/BP.png"))))));
         }
 
         // Fill bottom rows with white pieces
         for(int i = 0; i < button.length; i++){
             button[6][i].setToolTipText(white_pawn);
+            button[6][i].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WP.png"))))));
         }
         button[7][0].setToolTipText(white_tower);
         button[7][1].setToolTipText(white_horse);
@@ -156,5 +171,20 @@ public class GUI extends JPanel{
         button[7][5].setToolTipText(white_bishop);
         button[7][6].setToolTipText(white_horse);
         button[7][7].setToolTipText(white_tower);
+        button[7][0].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WT.png"))))));
+        button[7][1].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WH.png"))))));
+        button[7][2].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WB.png"))))));
+        button[7][3].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WK.png"))))));
+        button[7][4].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WQ.png"))))));
+        button[7][5].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WB.png"))))));
+        button[7][6].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WH.png"))))));
+        button[7][7].setIcon(upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/WT.png"))))));
+    }
+
+    public ImageIcon upscaleIcon(ImageIcon original){
+
+        Image originalImage = original.getImage();
+        Image upscaledImage = originalImage.getScaledInstance(60, 55, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(upscaledImage);
     }
 }
