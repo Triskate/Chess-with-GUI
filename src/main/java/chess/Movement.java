@@ -1,8 +1,5 @@
 package chess;
 
-import javax.swing.*;
-import java.util.Objects;
-
 public class Movement {
 
     Promotion_GUI promotionGui = new Promotion_GUI();
