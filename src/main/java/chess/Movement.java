@@ -1,8 +1,11 @@
 package chess;
 
+import javax.swing.*;
+import java.util.Objects;
+
 public class Movement {
 
-    //GUI gui = new GUI();
+    Promotion_GUI promotionGui = new Promotion_GUI();
 
     public boolean validateMovement (int currentRow, int currentColumn, int aimedRow, int aimedColumn){
 
@@ -43,7 +46,13 @@ public class Movement {
             // Validation for white pieces
             // Pawn
             case "WP":
-                return shortForwardWhite || ((aimedPiece.startsWith("B") && diagonalKillWhite));
+                if(shortForwardWhite || ((aimedPiece.startsWith("B") && diagonalKillWhite))){
+                    if(aimedRow == 0){
+                        promotionGui.startPromotionGUI(currentPiece.substring(0,1), aimedRow, aimedColumn);
+                    }
+                    return true;
+                }
+                return false;
             // Horse
             case "WH":
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && (L1 || L2 || L3 || L4);
@@ -66,7 +75,13 @@ public class Movement {
             // Validation for black pieces
             // Pawn
             case "BP":
-                return shortForwardBlack || (aimedPiece.startsWith("W") && diagonalKillBlack);
+                if(shortForwardBlack || (aimedPiece.startsWith("W") && diagonalKillBlack)){
+                    if(aimedRow == 7){
+                        promotionGui.startPromotionGUI(currentPiece.substring(0,1), aimedRow, aimedColumn);
+                    }
+                    return true;
+                }
+                return false;
             // Horse
             case "BH":
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && (L1 || L2 || L3 || L4);

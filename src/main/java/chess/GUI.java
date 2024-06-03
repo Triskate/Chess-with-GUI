@@ -238,7 +238,7 @@ public class GUI extends JPanel{
     }
 
     // Function to upscale images used as icons
-    public ImageIcon upscaleIcon(ImageIcon original){
+    public static ImageIcon upscaleIcon(ImageIcon original){
         Image originalImage = original.getImage();
         Image upscaledImage = originalImage.getScaledInstance(60, 55, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(upscaledImage);
