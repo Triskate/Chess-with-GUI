@@ -2,7 +2,7 @@ package chess;
 
 public class Movement {
 
-    Promotion_GUI promotionGui = new Promotion_GUI();
+    PromotionGUI promotionGui = new PromotionGUI();
 
     public boolean validateMovement (int currentRow, int currentColumn, int aimedRow, int aimedColumn){
 

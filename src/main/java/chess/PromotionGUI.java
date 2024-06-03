@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
-public class Promotion_GUI extends JPanel {
+public class PromotionGUI extends JPanel {
 
     public void startPromotionGUI(String Color, int aimedRow, int aimedColumn){
 

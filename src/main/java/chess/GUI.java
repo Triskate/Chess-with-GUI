@@ -8,8 +8,9 @@ import java.util.Objects;
 
 public class GUI extends JPanel{
 
-    // Initiate movement
+    // Initiate classes
     Movement movement = new Movement();
+    WinnerGUI winnerGUI = new WinnerGUI();
 
     // Main variables
     static JButton[][] button = new JButton[8][8];
@@ -41,7 +42,7 @@ public class GUI extends JPanel{
 
         nameWhites.setEditable(true);
         nameWhites.setBounds(500,320,100,25);
-        nameWhites.setText("Whites");
+        nameWhites.setText("White");
         nameWhites.setHorizontalAlignment(JTextField.CENTER);
         frame.add( nameWhites );
 
@@ -52,7 +53,7 @@ public class GUI extends JPanel{
 
         nameBlacks.setEditable(true);
         nameBlacks.setBounds(500,80,100,25);
-        nameBlacks.setText("Blacks");
+        nameBlacks.setText("Black");
         nameBlacks.setHorizontalAlignment(JTextField.CENTER);
         frame.add( nameBlacks );
 
@@ -92,6 +93,7 @@ public class GUI extends JPanel{
                                 // Make all the validations needed before moving the piece
                                 if(movement.checkPlayerPiece(currentRow, currentColumn) &&movement.validateMovement(currentRow, currentColumn, aimedRow, aimedColumn)){
                                     if(aimedPiece.equals("BK") || aimedPiece.equals("WK")){
+                                        winnerGUI.startWinnerGUI(Main.currentPlayer, nameWhites.getText(), nameBlacks.getText());
                                         frame.setVisible(false);
                                     }
                                     //currentPiece = checkPromotion(currentRow, currentColumn, aimedRow);
