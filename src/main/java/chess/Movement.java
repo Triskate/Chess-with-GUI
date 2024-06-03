@@ -1,15 +1,22 @@
 package chess;
 
-public class Rules {
+import javax.swing.*;
+import java.util.Objects;
+
+public class Movement {
+
+    Promotion_GUI promotionGui = new Promotion_GUI();
 
     public boolean validateMovement (int currentRow, int currentColumn, int aimedRow, int aimedColumn){
 
-        String currentPiece = Board.main_board[currentRow][currentColumn];
-        String aimedPiece = Board.main_board[aimedRow][aimedColumn];
+        String currentPiece = GUI.button[currentRow][currentColumn].getToolTipText();
+        String aimedPiece = GUI.button[aimedRow][aimedColumn].getToolTipText();
 
         // Pawn movements
-        boolean shortForward = aimedRow == currentRow-1 && aimedPiece.equals("  ");
-        boolean diagonalKill = (aimedRow == currentRow-1) && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1);
+        boolean shortForwardWhite = aimedRow == currentRow-1 && aimedPiece.equals("  ") && currentColumn == aimedColumn;
+        boolean shortForwardBlack = aimedRow == currentRow+1 && aimedPiece.equals("  ") && currentColumn == aimedColumn;
+        boolean diagonalKillWhite = (aimedRow == currentRow-1) && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1);
+        boolean diagonalKillBlack = (aimedRow == currentRow+1) && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1);
 
         // Horse movements
         boolean L1 = aimedRow == currentRow+2 && (aimedColumn == currentColumn+1 || aimedColumn == currentColumn-1);
@@ -39,11 +46,17 @@ public class Rules {
             // Validation for white pieces
             // Pawn
             case "WP":
-                return shortForward || (aimedPiece.startsWith("B") && diagonalKill);
+                if(shortForwardWhite || ((aimedPiece.startsWith("B") && diagonalKillWhite))){
+                    if(aimedRow == 0){
+                        promotionGui.startPromotionGUI(currentPiece.substring(0,1), aimedRow, aimedColumn);
+                    }
+                    return true;
+                }
+                return false;
             // Horse
             case "WH":
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) && (L1 || L2 || L3 || L4);
-            // Bishop (Need to fix jumping through pieces)
+            // Bishop
             case "WB":
                 return (aimedPiece.startsWith("B") || aimedPiece.equals("  ")) &&
                        diagonal && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
@@ -62,11 +75,17 @@ public class Rules {
             // Validation for black pieces
             // Pawn
             case "BP":
-                return shortForward || (aimedPiece.startsWith("W") && diagonalKill);
+                if(shortForwardBlack || (aimedPiece.startsWith("W") && diagonalKillBlack)){
+                    if(aimedRow == 7){
+                        promotionGui.startPromotionGUI(currentPiece.substring(0,1), aimedRow, aimedColumn);
+                    }
+                    return true;
+                }
+                return false;
             // Horse
             case "BH":
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) && (L1 || L2 || L3 || L4);
-            // Bishop (Need to fix jumping through pieces)
+            // Bishop
             case "BB":
                 return (aimedPiece.startsWith("W") || aimedPiece.equals("  ")) &&
                        diagonal && clearPath(currentRow, currentColumn, aimedRow, aimedColumn);
@@ -102,14 +121,14 @@ public class Rules {
             case "horizontal":
                 if(aimedColumn - currentColumn > 0){
                     for(int i = currentColumn+1; i < aimedColumn; i++){
-                        if(!Board.main_board[currentRow][i].equals("  ")){
+                        if(!GUI.button[currentRow][i].getToolTipText().equals("  ")){
                             return false;
                         }
                     }
                 }
                 else{
                     for(int i = currentColumn-1; i > aimedColumn; i--){
-                        if(!Board.main_board[currentRow][i].equals("  ")){
+                        if(!GUI.button[currentRow][i].getToolTipText().equals("  ")){
                             return false;
                         }
                     }
@@ -118,14 +137,14 @@ public class Rules {
             case "vertical":
                 if(aimedRow - currentRow > 0){
                     for(int i = currentRow+1; i < aimedRow; i++){
-                        if(!Board.main_board[i][currentColumn].equals("  ")){
+                        if(!GUI.button[i][currentColumn].getToolTipText().equals("  ")){
                             return false;
                         }
                     }
                 }
                 else{
                     for(int i = currentRow-1; i > aimedRow; i--){
-                        if(!Board.main_board[i][currentColumn].equals("  ")){
+                        if(!GUI.button[i][currentColumn].getToolTipText().equals("  ")){
                             return false;
                         }
                     }
@@ -135,16 +154,16 @@ public class Rules {
                 if(currentRow < aimedRow && currentColumn < aimedColumn){
                     for(int i = currentRow+1; i < aimedRow;i++){
                         for(int e = currentColumn+1; e < aimedColumn;e++){
-                            if(!Board.main_board[i][e].equals("  ")){
+                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
                                 return false;
                             }
                         }
                     }
                 }
-                else if(currentRow < aimedRow && currentColumn > aimedColumn){
+                else if(currentRow < aimedRow){
                     for(int i = currentRow+1; i < aimedRow;i++){
                         for(int e = currentColumn-1; e > aimedColumn;e--){
-                            if(!Board.main_board[i][e].equals("  ")){
+                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
                                 return false;
                             }
                         }
@@ -153,16 +172,16 @@ public class Rules {
                 else if(currentRow > aimedRow && currentColumn < aimedColumn){
                     for(int i = currentRow-1; i > aimedRow;i--){
                         for(int e = currentColumn+1; e < aimedColumn;e++){
-                            if(!Board.main_board[i][e].equals("  ")){
+                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
                                 return false;
                             }
                         }
                     }
                 }
-                else if(currentRow > aimedRow && currentColumn > aimedColumn){
+                else if(currentRow > aimedRow){
                     for(int i = currentRow-1; i > aimedRow;i--){
                         for(int e = currentColumn-1; e > aimedColumn;e--){
-                            if(!Board.main_board[i][e].equals("  ")){
+                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
                                 return false;
                             }
                         }
@@ -172,5 +191,22 @@ public class Rules {
             default:
                 return false;
         }
+    }
+    public boolean checkPlayerPiece(int row, int column){
+
+        String currentPiece = GUI.button[row][column].getToolTipText();
+        switch (Main.currentPlayer){
+            case 1:
+                if(!currentPiece.startsWith("W")){
+                    return false;
+                }
+                break;
+            case 2:
+                if(!currentPiece.startsWith("B")){
+                    return false;
+                }
+                break;
+        }
+        return true;
     }
 }
