@@ -20,6 +20,9 @@ public class GUI extends JPanel{
     int aimedRow;
     int aimedColumn;
 
+    Color selected = new Color(215,229, 88);
+    Color currentColor;
+
     public void startGUI(){
 
         // Declare GUI
@@ -28,15 +31,41 @@ public class GUI extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Define GUI variables
-        frame.setSize(500,500);
-        frame.setLayout(new GridLayout(8,8));
+        frame.setSize(700,455);
+        frame.setLayout(null);
+
+        // Create and initiate frame fields
+        JTextField nameWhites = new JTextField();
+        JLabel turnIndicator = new JLabel();
+        JTextField nameBlacks = new JTextField();
+
+        nameWhites.setEditable(true);
+        nameWhites.setBounds(500,320,100,25);
+        nameWhites.setText("Whites");
+        nameWhites.setHorizontalAlignment(JTextField.CENTER);
+        frame.add( nameWhites );
+
+        turnIndicator.setText(nameWhites.getText() + "'s turn!");
+        turnIndicator.setBounds(500,200,100,25);
+        turnIndicator.setHorizontalAlignment(JTextField.CENTER);
+        frame.add( turnIndicator );
+
+        nameBlacks.setEditable(true);
+        nameBlacks.setBounds(500,80,100,25);
+        nameBlacks.setText("Blacks");
+        nameBlacks.setHorizontalAlignment(JTextField.CENTER);
+        frame.add( nameBlacks );
 
         // Create and initiate buttons
+
+        int x = 10;
+        int y = 10;
+
         for (int i = 0; i < 8; i++){
             for (int e = 0; e < 8; e++){
                 button[i][e] = new JButton("  ");
-                button[i][e].setSize(50,50);
                 button[i][e].setName(i + "" + e);
+                button[i][e].setBounds(x,y,50,50);
                 button[i][e].addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
 
@@ -47,6 +76,8 @@ public class GUI extends JPanel{
 
                                 currentRow = Integer.parseInt(clickedButton.getName().substring(0,1));
                                 currentColumn = Integer.parseInt(clickedButton.getName().substring(1,2));
+                                currentColor = button[currentRow][currentColumn].getBackground();
+                                button[currentRow][currentColumn].setBackground(selected);
                                 clicks++;
                                 break;
 
@@ -72,22 +103,25 @@ public class GUI extends JPanel{
                                     // Swap players at the end of the turn
                                     switch (Main.currentPlayer){
                                         case 1:
+                                            turnIndicator.setText(nameBlacks.getText() + "'s turn!");
                                             Main.currentPlayer = 2;
                                             break;
                                         case 2:
+                                            turnIndicator.setText(nameWhites.getText() + "'s turn!");
                                             Main.currentPlayer = 1;
                                             break;
                                     }
                                 }
+                                button[currentRow][currentColumn].setBackground(currentColor);
                                 clicks--;
-                                System.out.println(Main.currentPlayer);
-                                System.out.println(clicks);
                                 break;
                         }
-
                     }
                 });
+                x = x + 50;
             }
+            y = y + 50;
+            x = 10;
         }
         setUpBoard();
 
