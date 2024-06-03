@@ -92,7 +92,7 @@ public class GUI extends JPanel{
                                 // Make all the validations needed before moving the piece
                                 if(movement.checkPlayerPiece(currentRow, currentColumn) &&movement.validateMovement(currentRow, currentColumn, aimedRow, aimedColumn)){
                                     if(aimedPiece.equals("BK") || aimedPiece.equals("WK")){
-                                        // Closing operation
+                                        frame.setVisible(false);
                                     }
                                     //currentPiece = checkPromotion(currentRow, currentColumn, aimedRow);
                                     button[aimedRow][aimedColumn].setToolTipText(currentPiece);
