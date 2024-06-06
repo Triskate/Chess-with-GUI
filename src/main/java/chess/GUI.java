@@ -1,9 +1,13 @@
 package chess;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
 public class GUI extends JPanel{
@@ -24,7 +28,8 @@ public class GUI extends JPanel{
     Color selected = new Color(215,229, 88);
     Color currentColor;
 
-    public void startGUI(){
+    public void startGUI()
+            throws UnsupportedAudioFileException, LineUnavailableException, IOException {
 
         // Declare GUI
         JFrame frame = new JFrame("Chess");
@@ -34,6 +39,12 @@ public class GUI extends JPanel{
         // Define GUI variables
         frame.setSize(700,455);
         frame.setLayout(null);
+
+        // Set up sounds
+        URL move = new URL("file:./src/main/resources/sounds/move.wav");
+        AudioInputStream movementAis = AudioSystem.getAudioInputStream(move);
+        Clip clip = AudioSystem.getClip();
+        clip.open(movementAis);
 
         // Create and initiate frame fields
         JTextField nameWhites = new JTextField();
@@ -91,7 +102,7 @@ public class GUI extends JPanel{
                                 String aimedPiece = button[aimedRow][aimedColumn].getToolTipText();
 
                                 // Make all the validations needed before moving the piece
-                                if(movement.checkPlayerPiece(currentRow, currentColumn) &&movement.validateMovement(currentRow, currentColumn, aimedRow, aimedColumn)){
+                                if(movement.checkPlayerPiece(currentRow, currentColumn) && movement.validateMovement(currentRow, currentColumn, aimedRow, aimedColumn)){
                                     if(aimedPiece.equals("BK") || aimedPiece.equals("WK")){
                                         winnerGUI.startWinnerGUI(Main.currentPlayer, nameWhites.getText(), nameBlacks.getText());
                                         frame.setVisible(false);
@@ -101,6 +112,8 @@ public class GUI extends JPanel{
                                     button[aimedRow][aimedColumn].setIcon(button[currentRow][currentColumn].getIcon());
                                     button[currentRow][currentColumn].setToolTipText("  ");
                                     button[currentRow][currentColumn].setIcon(null);
+                                    clip.setFramePosition(0);
+                                    clip.start();
 
                                     // Swap players at the end of the turn
                                     switch (Main.currentPlayer){
@@ -242,7 +255,7 @@ public class GUI extends JPanel{
     // Function to upscale images used as icons
     public static ImageIcon upscaleIcon(ImageIcon original){
         Image originalImage = original.getImage();
-        Image upscaledImage = originalImage.getScaledInstance(60, 55, java.awt.Image.SCALE_SMOOTH);
+        Image upscaledImage = originalImage.getScaledInstance(53, 53, java.awt.Image.SCALE_SMOOTH);
         return new ImageIcon(upscaledImage);
     }
 }
