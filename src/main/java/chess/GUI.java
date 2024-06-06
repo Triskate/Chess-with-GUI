@@ -37,6 +37,8 @@ public class GUI extends JPanel{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Define GUI variables
+        ImageIcon icon = upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/Icon.png")))));
+        frame.setIconImage(icon.getImage());
         frame.setSize(700,455);
         frame.setLayout(null);
 
@@ -72,7 +74,6 @@ public class GUI extends JPanel{
 
         int x = 10;
         int y = 10;
-
         for (int i = 0; i < 8; i++){
             for (int e = 0; e < 8; e++){
                 button[i][e] = new JButton("  ");
