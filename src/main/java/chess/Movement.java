@@ -149,39 +149,39 @@ public class Movement {
                 return true;
             case "diagonal":
                 if(currentRow < aimedRow && currentColumn < aimedColumn){
+                    int e = currentColumn+1;
                     for(int i = currentRow+1; i < aimedRow;i++){
-                        for(int e = currentColumn+1; e < aimedColumn;e++){
-                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
-                                return false;
-                            }
+                        if(!GUI.button[i][e].getToolTipText().equals("  ")){
+                            return false;
                         }
+                        e++;
                     }
                 }
                 else if(currentRow < aimedRow){
+                    int e = currentColumn-1;
                     for(int i = currentRow+1; i < aimedRow;i++){
-                        for(int e = currentColumn-1; e > aimedColumn;e--){
-                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
-                                return false;
-                            }
+                        if(!GUI.button[i][e].getToolTipText().equals("  ")){
+                            return false;
                         }
+                        e--;
                     }
                 }
                 else if(currentRow > aimedRow && currentColumn < aimedColumn){
+                    int e = currentColumn+1;
                     for(int i = currentRow-1; i > aimedRow;i--){
-                        for(int e = currentColumn+1; e < aimedColumn;e++){
-                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
-                                return false;
-                            }
+                        if(!GUI.button[i][e].getToolTipText().equals("  ")){
+                            return false;
                         }
+                        e++;
                     }
                 }
                 else if(currentRow > aimedRow){
+                    int e = currentColumn-1;
                     for(int i = currentRow-1; i > aimedRow;i--){
-                        for(int e = currentColumn-1; e > aimedColumn;e--){
-                            if(!GUI.button[i][e].getToolTipText().equals("  ")){
-                                return false;
-                            }
+                        if(!GUI.button[i][e].getToolTipText().equals("  ")){
+                            return false;
                         }
+                        e--;
                     }
                 }
                 return true;

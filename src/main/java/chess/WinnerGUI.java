@@ -1,6 +1,7 @@
 package chess;
 
 import javax.swing.*;
+import java.util.Objects;
 
 public class WinnerGUI extends JPanel {
 
@@ -11,6 +12,8 @@ public class WinnerGUI extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Define GUI variables
+        ImageIcon icon = GUI.upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/Icon.png")))));
+        frame.setIconImage(icon.getImage());
         frame.setSize(270,150);
         frame.setLayout(null);
 

@@ -13,6 +13,8 @@ public class PromotionGUI extends JPanel {
         JFrame frame = new JFrame("Promotion");
 
         // Define GUI variables
+        ImageIcon icon = GUI.upscaleIcon(new ImageIcon((Objects.requireNonNull(getClass().getResource("/icons/Icon.png")))));
+        frame.setIconImage(icon.getImage());
         frame.setSize(270,150);
         frame.setLayout(null);
 
